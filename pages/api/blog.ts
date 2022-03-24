@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 interface BlogIf{
     id: string,
     title: string,
-    contex: string
+    context: string
 }
 
 type Data = {
@@ -19,17 +19,17 @@ export default function handler(
     {
         id: '1',
         title: '标题1',
-        contex: '内容1'
+        context: '内容1'
     },
     {
         id: '2',
         title: '标题2',
-        contex: '内容2'
+        context: '内容2'
     },
     {
         id: '3',
         title: '标题3',
-        contex: '内容3'
+        context: '内容3'
     }
   ] })
 }
