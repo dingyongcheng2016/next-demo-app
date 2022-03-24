@@ -3,7 +3,7 @@ import Head from 'next/head';
 import fetch from '@/utils/request';
 import _ from 'lodash';
 
-const Blog: NextPage =(props)=>{
+const Blog: NextPage =(props: any)=>{
     const { posts=[] } = props;
     console.log('posts', posts)
     return (
@@ -17,6 +17,7 @@ const Blog: NextPage =(props)=>{
             <div>
               {
                 _.map(_.get(posts, 'list', []), item=>{
+                  console.log('item', item)
                   return(
                     <div key={item.id}>
                       <div>{item.title}</div>
@@ -32,7 +33,7 @@ const Blog: NextPage =(props)=>{
 
 export async function getStaticProps() {
      // 调用外部 API 获取博文列表
-  const res = await fetch.get('http://localhost:3000/api/blog');
+  const res = await fetch.get('https://getman.cn/mock/blog/list');
   const posts = await res.data;
  
   // 通过返回 { props: { posts } } 对象，Blog 组件
