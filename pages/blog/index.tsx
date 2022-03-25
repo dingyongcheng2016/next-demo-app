@@ -31,16 +31,39 @@ const Blog: NextPage =(props: any)=>{
     )
 };
 
-export async function getStaticProps() {
+// This function gets called at build time on server-side.
+// It may be called again, on a serverless function, if
+// the path has not been generated.
+export async function getStaticPaths() {
+    const res = await fetch('https://getman.cn/mock/blog/list')
+    const posts = res.data;
+  
+    // Get the paths we want to pre-render based on posts
+    const paths = posts.map((post) => ({
+      params: { id: post.id },
+    }))
+  
+    // We'll pre-render only these paths at build time.
+    // { fallback: blocking } will server-render pages
+    // on-demand if the path doesn't exist.
+    return { paths, fallback: 'blocking' }
+  }
+
+export async function getStaticProps(context: any) {
+    console.log('context', context.params)
      // 调用外部 API 获取博文列表
   const res = await fetch.get('https://getman.cn/mock/blog/list');
-  const posts = await res.data;
+  const posts = res.data;
  
   // 通过返回 { props: { posts } } 对象，Blog 组件
   // 在构建时将接收到 `posts` 参数
   return {
     props: {
       posts,
+      // Next.js will attempt to re-generate the page:
+      // - When a request comes in
+      // - At most once every 10 seconds
+      revalidate: 10, // In seconds
     },
   }
 }
