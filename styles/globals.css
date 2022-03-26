@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.flex_center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img_style{
+  border-radius: 20px;
+}
